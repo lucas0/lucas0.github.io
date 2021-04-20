@@ -14,7 +14,7 @@ footer_text: >
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
 
 icon: 👾 # the emoji used as the favicon
-google_analytics: 'G-0NLP4J46Y5' # the measurement ID used by GA to track this website
+google_analytics: 'UA-194832503-1' # the measurement ID used by GA to track this website
 url: # the base hostname & protocol for your site
 baseurl:  # the subpath of your site, e.g. /blog/
 last_updated: false # set to true if you want to display last updated in the footer
