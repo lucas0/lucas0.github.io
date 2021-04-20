@@ -1,3 +1,5 @@
 A simple repo for a simple website.
 
-./bin/deploy to update website according to gh-pages branch
+One liner to update website with local modifications:
+
+    sh add-commit-push-deploy.sh "commit message"
