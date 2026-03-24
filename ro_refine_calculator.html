@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RO Refine Calculator</title>
+<!-- Page-specific favicons (Oridecon) -->
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <style>
 /* ══ CSS Variables ══ */
 :root {
@@ -124,12 +128,15 @@ h3{font-size:14px;font-weight:600;margin-bottom:10px;color:var(--text2)}
 
 /* ══ Top bar (title + toggle) ══ */
 .top-bar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px;max-width:1800px;margin-left:auto;margin-right:auto}
+.top-bar-right{display:flex;align-items:center;gap:10px}
 .theme-toggle{display:flex;align-items:center;gap:7px;cursor:pointer;background:var(--toggle-bg);border:1px solid var(--toggle-br);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--text3);transition:background .2s;user-select:none;white-space:nowrap}
 .theme-toggle:hover{color:var(--text)}
 .toggle-track{width:28px;height:16px;background:var(--border2);border-radius:8px;position:relative;transition:background .2s;flex-shrink:0}
 .toggle-thumb{position:absolute;top:2px;left:2px;width:12px;height:12px;background:#fff;border-radius:50%;transition:transform .2s}
 [data-theme="dark"] .toggle-track{background:var(--tab-active)}
 [data-theme="dark"] .toggle-thumb{transform:translateX(12px)}
+.coffee-btn-top{display:flex;align-items:center;gap:6px;padding:6px 14px;background:#FFDD00;border:none;border-radius:20px;color:#000;text-decoration:none;font-size:12px;font-weight:600;transition:all .2s;white-space:nowrap;cursor:pointer}
+.coffee-btn-top:hover{background:#FFC700;transform:translateY(-1px);box-shadow:0 2px 8px rgba(255,221,0,0.3)}
 
 /* ══ Shared header ══ */
 .shared-header{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:20px;max-width:1800px;margin-left:auto;margin-right:auto}
@@ -278,6 +285,49 @@ grid-template-columns: 1fr;
 .tab-config{grid-template-columns:repeat(4,1fr)}
 .result-grid-4{grid-template-columns:repeat(4,1fr)}
 }
+
+@media (max-width: 768px) {
+.top-bar{
+flex-direction:column;
+gap:12px;
+}
+.top-bar-right{
+width:100%;
+justify-content:flex-end;
+flex-wrap:wrap;
+}
+}
+
+/* ══ Footer ══ */
+.footer{
+max-width:1800px;
+margin:30px auto 0;
+padding:20px;
+text-align:center;
+border-top:1px solid var(--border);
+}
+.coffee-link{
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:10px 20px;
+background:var(--bg2);
+border:1px solid var(--border);
+border-radius:8px;
+color:var(--text2);
+text-decoration:none;
+font-size:14px;
+font-weight:500;
+transition:all .2s;
+}
+.coffee-link:hover{
+background:var(--bg3);
+border-color:var(--text4);
+transform:translateY(-2px);
+}
+.coffee-icon{
+font-size:18px;
+}
 </style>
 </head>
 <body>
@@ -287,10 +337,16 @@ grid-template-columns: 1fr;
 <h2>RO Refine Calculator</h2>
 <p class="subtitle">Armor & Weapons · both ores destroy item on failure · rates from RateMyServer</p>
 </div>
+<div class="top-bar-right">
+<a href="https://buymeacoffee.com/lucazedo" target="_blank" class="coffee-btn-top">
+<span>☕</span>
+<span>Buy me a coffee</span>
+</a>
 <div class="theme-toggle" onclick="toggleTheme()">
 <span id="theme-icon">🌙</span>
 <div class="toggle-track"><div class="toggle-thumb"></div></div>
 <span id="theme-label">Dark</span>
+</div>
 </div>
 </div>
 
@@ -477,6 +533,14 @@ NPC fees applied automatically — Regular: Armor 2,000z · Wep Lv1 50z · Lv2 2
 </div>
 </div>
 
+</div>
+
+<!-- ══ Footer ══ -->
+<div class="footer">
+<a href="https://buymeacoffee.com/lucazedo" target="_blank" class="coffee-link">
+<span class="coffee-icon">☕</span>
+<span>Buy me a coffee</span>
+</a>
 </div>
 
 <script>
