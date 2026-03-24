@@ -137,6 +137,8 @@ h3{font-size:14px;font-weight:600;margin-bottom:10px;color:var(--text2)}
 [data-theme="dark"] .toggle-thumb{transform:translateX(12px)}
 .coffee-btn-top{display:flex;align-items:center;gap:6px;padding:6px 14px;background:#FFDD00;border:none;border-radius:20px;color:#000;text-decoration:none;font-size:12px;font-weight:600;transition:all .2s;white-space:nowrap;cursor:pointer}
 .coffee-btn-top:hover{background:#FFC700;transform:translateY(-1px);box-shadow:0 2px 8px rgba(255,221,0,0.3)}
+.feedback-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;color:var(--text2);text-decoration:none;font-size:12px;font-weight:600;transition:all .2s;white-space:nowrap;cursor:pointer}
+.feedback-btn:hover{background:var(--bg4);border-color:var(--text3);transform:translateY(-1px)}
 
 /* ══ Shared header ══ */
 .shared-header{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:20px;max-width:1800px;margin-left:auto;margin-right:auto}
@@ -342,6 +344,10 @@ font-size:18px;
 <span>☕</span>
 <span>Buy me a coffee</span>
 </a>
+<a href="https://forms.gle/Y5v2BzeCTe7XeErUA" target="_blank" class="feedback-btn">
+<span>💬</span>
+<span>Send Feedback</span>
+</a>
 <div class="theme-toggle" onclick="toggleTheme()">
 <span id="theme-icon">🌙</span>
 <div class="toggle-track"><div class="toggle-thumb"></div></div>
@@ -420,7 +426,7 @@ NPC fees applied automatically — Regular: Armor 2,000z · Wep Lv1 50z · Lv2 2
 </div>
 <div class="tab-card">
 <label id="item-lbl">Item price at +0 (z)</label>
-<input type="number" id="ip" value="20000" oninput="calc()">
+<input type="number" id="ip" value="20000" oninput="saveInputs();calc()">
 </div>
 </div>
 <div class="alert alert-warn" id="start-note" style="display:none"></div>
@@ -487,7 +493,7 @@ NPC fees applied automatically — Regular: Armor 2,000z · Wep Lv1 50z · Lv2 2
 <div class="tab-config">
 <div class="tab-card equip">
 <label>Equipment type</label>
-<select id="p-etype" onchange="calcProfit()">
+<select id="p-etype" onchange="saveInputs();calcProfit()">
 <option value="armor">Armor / Shadow</option>
 <option value="wlv3">Weapon Level 3</option>
 <option value="wlv4">Weapon Level 4</option>
@@ -495,7 +501,7 @@ NPC fees applied automatically — Regular: Armor 2,000z · Wep Lv1 50z · Lv2 2
 </div>
 <div class="tab-card highlight">
 <label>Target refine level</label>
-<select id="p-tgt" onchange="calcProfit()">
+<select id="p-tgt" onchange="saveInputs();calcProfit()">
 <option value="1">+1</option><option value="2">+2</option><option value="3">+3</option>
 <option value="4">+4</option><option value="5">+5</option><option value="6">+6</option>
 <option value="7">+7</option><option value="8">+8</option>
@@ -504,11 +510,11 @@ NPC fees applied automatically — Regular: Armor 2,000z · Wep Lv1 50z · Lv2 2
 </div>
 <div class="tab-card start">
 <label>Buy price of +0 item (z)</label>
-<input type="number" id="p-buy" value="20000" oninput="calcProfit()">
+<input type="number" id="p-buy" value="20000" oninput="saveInputs();calcProfit()">
 </div>
 <div class="tab-card sell">
 <label id="p-sell-lbl">Sell price of +9 item (z)</label>
-<input type="number" id="p-sell" value="500000" oninput="calcProfit()">
+<input type="number" id="p-sell" value="500000" oninput="saveInputs();calcProfit()">
 </div>
 </div>
 </div>
@@ -582,6 +588,48 @@ document.getElementById('theme-label').textContent = 'Light';
 });
 }
 })();
+
+/* ── Save/Load Inputs ── */
+function saveInputs(){
+const inputs = {
+sElu: document.getElementById('s-elu').value,
+sOri: document.getElementById('s-ori').value,
+sEnrElu: document.getElementById('s-enr-elu').value,
+sEnrOri: document.getElementById('s-enr-ori').value,
+etype: document.getElementById('etype').value,
+start: document.getElementById('start').value,
+tgt: document.getElementById('tgt').value,
+ip: document.getElementById('ip').value,
+pEtype: document.getElementById('p-etype').value,
+pTgt: document.getElementById('p-tgt').value,
+pBuy: document.getElementById('p-buy').value,
+pSell: document.getElementById('p-sell').value
+};
+localStorage.setItem('ro-calc-inputs', JSON.stringify(inputs));
+}
+
+function loadInputs(){
+const saved = localStorage.getItem('ro-calc-inputs');
+if(!saved) return;
+try {
+const inputs = JSON.parse(saved);
+if(inputs.sElu) document.getElementById('s-elu').value = inputs.sElu;
+if(inputs.sOri) document.getElementById('s-ori').value = inputs.sOri;
+if(inputs.sEnrElu) document.getElementById('s-enr-elu').value = inputs.sEnrElu;
+if(inputs.sEnrOri) document.getElementById('s-enr-ori').value = inputs.sEnrOri;
+if(inputs.etype) document.getElementById('etype').value = inputs.etype;
+if(inputs.start) document.getElementById('start').value = inputs.start;
+if(inputs.tgt) document.getElementById('tgt').value = inputs.tgt;
+if(inputs.ip) document.getElementById('ip').value = inputs.ip;
+if(inputs.pEtype) document.getElementById('p-etype').value = inputs.pEtype;
+if(inputs.pTgt) document.getElementById('p-tgt').value = inputs.pTgt;
+if(inputs.pBuy) document.getElementById('p-buy').value = inputs.pBuy;
+if(inputs.pSell) document.getElementById('p-sell').value = inputs.pSell;
+} catch(e) {
+console.error('Error loading saved inputs:', e);
+}
+}
+
 
 /* ── Shared prices ── */
 function shared(etype){
@@ -664,10 +712,10 @@ return`Reg→+${k-1}, Enr +${k}→+${target}`;
 }
 
 /* ── Shared / type change ── */
-function onSharedChange(){calc();calcProfit();}
-function onEtypeChange(){onSharedChange();}
-function onStartChange(){enforceRange();calc();}
-function onTargetChange(){enforceRange();calc();}
+function onSharedChange(){saveInputs();calc();calcProfit();}
+function onEtypeChange(){saveInputs();onSharedChange();}
+function onStartChange(){saveInputs();enforceRange();calc();}
+function onTargetChange(){saveInputs();enforceRange();calc();}
 
 function enforceRange(){
 const s=+document.getElementById('start').value,t=+document.getElementById('tgt').value;
@@ -874,6 +922,8 @@ return`<tr class="${isBest?'best-profit':''}">
 document.getElementById('p-mix-note').innerHTML=`<b>ROI</b> = profit ÷ total expected spend × 100. <b>Breakeven sell price</b> = minimum sale price to cover expected costs. All figures are <i>expected values</i>.`;
 }
 
+// Initialize: Load saved inputs and run calculations
+loadInputs();
 onEtypeChange();
 calcProfit();
 </script>
